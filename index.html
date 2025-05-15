@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPS - play or get played</title>
+    <style>
+        body {
+            background: #f7f7f7;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem 2rem 2rem 2rem;
+            max-width: 340px;
+            width: 100%;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            width: 100%;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .button {
+            background: #f0f0f0;
+            border: none;
+            border-radius: 12px;
+            font-size: 2.5rem;
+            padding: 0.7rem 1.2rem;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .button:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px) scale(1.07);
+        }
+
+        #score {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: #444;
+            display: block;
+            text-align: center;
+        }
+        .styled-hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            width: 70%;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Stefan's RPS Game</h1>
+        <hr class="styled-hr" />
+        <div class="buttons">
+            <h3>Choose your move:</h3>
+            <div class="button-row">
+                <button onclick="chooseMove(0)" class="button" id="button-rock" title="Rock">
+                    <span aria-label="Rock" role="img">✊</span>
+                </button>
+                <button onclick="chooseMove(1)" class="button" id="button-paper" title="Paper">
+                    <span aria-label="Paper" role="img">🖐️</span>
+                </button>
+                <button onclick="chooseMove(2)" class="button" id="button-scissors" title="Scissors">
+                    <span aria-label="Scissors" role="img">✌️</span>
+                </button>
+            </div>
+        </div>
+        <div><b id="score"></b></div>
+    </div>
+
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function showScore(computerMove = undefined) {
+            let divElement = document.getElementById("score");
+
+            divElement.textContent = '';
+
+            let playerResult = document.createElement("p");
+            playerResult.textContent = `Your score: ${playerScore}`;
+            playerResult.style.color = 'green';
+            divElement.appendChild(playerResult);
+
+            let computerResult = document.createElement("p");
+            computerResult.textContent = `Computer score: ${computerScore}`;
+            computerResult.style.color = 'red';
+            divElement.appendChild(computerResult);
+        }
+
+        function generateMove() {
+            return Math.floor(Math.floor(Math.random() * 3));
+        }
+
+        function chooseMove(move) {
+            let computerMove = generateMove();
+
+            console.log(`Computer chose: ${computerMove}`);
+
+            if (move === computerMove) {
+                alert("TIE!");
+
+                return;
+            }
+
+            if (move > computerMove) {
+                if (move - computerMove == 1) {
+                    playerScore++
+                } else {
+                    computerScore++;
+                }
+            } else {
+                if (computerMove - move == 1) {
+                    computerScore++;
+                } else {
+                    playerScore++;
+                }
+            }
+
+            if (computerMove == 0) {
+                computerMove = "Rock";
+            } else if (computerMove == 1) {
+                computerMove = "Paper";
+            } else {
+                computerMove = "Scissors";
+            }
+
+            alert(`Computer chose: ${computerMove}`);
+
+            showScore();
+        }
+
+        showScore();
+    </script>
+</body>
+
+</html>
