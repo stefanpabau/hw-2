@@ -104,6 +104,13 @@
     </div>
 
     <script>
+
+        const moves = new Map()([
+            [0, "Rock"],
+            [1, "Paper"],
+            [2, "Scissors"]
+        ]);
+
         let playerScore = 0;
         let computerScore = 0;
 
@@ -140,7 +147,7 @@
 
             if (move > computerMove) {
                 if (move - computerMove == 1) {
-                    playerScore++
+                    playerScore++;
                 } else {
                     computerScore++;
                 }
@@ -152,13 +159,7 @@
                 }
             }
 
-            if (computerMove == 0) {
-                computerMove = "Rock";
-            } else if (computerMove == 1) {
-                computerMove = "Paper";
-            } else {
-                computerMove = "Scissors";
-            }
+            computerMove = moves.get(computerMove);
 
             alert(`Computer chose: ${computerMove}`);
 
